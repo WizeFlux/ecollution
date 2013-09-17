@@ -1,0 +1,15 @@
+google-map{
+  height: 600px;
+  width: 600px;
+  display: block;
+}
+
+a{
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+
+a:hover{
+  text-decoration: none;
+}

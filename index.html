@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app='ecollution'>
+  <head>
+    <title>Ecollution live</title>
+    <script src='http://maps.googleapis.com/maps/api/js?sensor=false&amp;language=ru'></script>
+    <script src='js/angular.min.js'></script>
+    <script src='js/angular-google-maps.js'></script>
+    <script src='js/underscore-min.js'></script>
+    <script src='js/application.js'></script>
+    <link href='css/application.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body id='application' ng-controller='AppCtrl'>
+    <menu>
+      <select ng-model='selectedCity' ng-options='c.name for c in cities'></select>
+      <select ng-model='selectedStation' ng-options='s.name for s in cityStations(selectedCity)'></select>
+    </menu>
+    <aside id='left'></aside>
+    <google-map center='center' draggable='true' fit='true' markers='markers' zoom='zoom'></google-map>
+    <aside id='right'></aside>
+  </body>
+</html>

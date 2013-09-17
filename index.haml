@@ -1,0 +1,17 @@
+!!! 5
+%html{'ng-app' => 'ecollution'}
+  %head
+    %title Ecollution live
+    %script{"src" => "http://maps.googleapis.com/maps/api/js?sensor=false&language=ru"}
+    %script{"src" => "js/angular.min.js"}
+    %script{"src" => "js/angular-google-maps.js"}
+    %script{"src" => "js/underscore-min.js"}
+    %script{"src" => "js/application.js"}
+    %link{"rel" => "stylesheet", "type" => "text/css", "href" => "css/application.css"}
+  %body{"ng-controller" => "AppCtrl", "id" => "application"}
+    %menu
+      %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
+      %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
+    %aside#left
+    %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
+    %aside#right
