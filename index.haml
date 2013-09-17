@@ -2,16 +2,47 @@
 %html{'ng-app' => 'ecollution'}
   %head
     %title Ecollution live
+    %meta{"charset" => "utf-8"}
     %script{"src" => "http://maps.googleapis.com/maps/api/js?sensor=false&language=ru"}
     %script{"src" => "js/angular.min.js"}
     %script{"src" => "js/angular-google-maps.js"}
     %script{"src" => "js/underscore-min.js"}
     %script{"src" => "js/application.js"}
+    %link{"rel" => "stylesheet", "type" => "text/css", "href" => "css/reset.css"}
     %link{"rel" => "stylesheet", "type" => "text/css", "href" => "css/application.css"}
   %body{"ng-controller" => "AppCtrl", "id" => "application"}
-    %menu
-      %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
-      %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
-    %aside#left
-    %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
-    %aside#right
+    .page-wrapper
+      %header.header
+        .header-left
+          .logotype
+            %a{"href" => "#"}
+              %img{"src" => "img/logotype.gif", "alt" => "logotype"}
+        .header-center
+          .h-desc
+            %p
+              Система автоматического мониторинга состояния и загрязнения окружающей среды
+              %span в on-line режиме
+          %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
+          %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
+
+      .content
+        .sidebar-left
+          %nav.s-menu
+            %ul.s-menu-list
+              %li.s-menu-list__item
+                %a.s-menu-list__item-link{"href" => "#"} посты на карте
+                %a.s-menu-list__item-link{"href" => "#"} о проекте
+                %a.s-menu-list__item-link{"href" => "#"} описание веществ
+        .main-content
+          %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
+
+        .sidebar-right sidebar right
+
+      %footer.footer
+        .copyright
+          %p © 2012 Экрос Инжиниринг. ingecros.ru
+          %p Все права защищены
+        .web-development
+          %p
+            Cделано в
+            %a{"href" => "#"} redfor.ru

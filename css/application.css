@@ -1,15 +1,47 @@
-google-map{
-  height: 600px;
-  width: 600px;
-  display: block;
-}
+/* ==========================================================================
+   Main css
+   ========================================================================== */
+	html{ height:100%; min-width:980px; }
+	body{ height:100%; background:#fff; }
+	.page-wrapper { min-height:100%; position:relative; }
+   
+   
+/* ==========================================================================
+   Header
+   ========================================================================== */
+   .header { width:100%; height:100px; background:#353f4d; }
+   .header-left { width:20%; float:left; }
+   .header-center { width:80%; float:right; }
+   /* logotype */
+   .logotype {  height:75px; padding-top:25px; background:#fff; }
+   .logotype img { margin-left:20px; }
+   
+   
+   
+/* ==========================================================================
+   Content
+   ========================================================================== */
+   .content { width:100%; }
 
-a{
-  text-decoration: underline;
-  color: blue;
-  cursor: pointer;
-}
-
-a:hover{
-  text-decoration: none;
-}
+/* ==========================================================================
+   Main content
+   ========================================================================== */
+   .main-content { width:60%; float:left; }
+   google-map { width:100%; height:100%; display: block; }
+					
+/* ==========================================================================
+   Sidebar left
+   ========================================================================== */
+   .sidebar-left { width:20%; float:left; background:#485566; }
+   
+/* ==========================================================================
+   Sidebar right
+   ========================================================================== */
+   .sidebar-right { width:20%; float:left; }   
+	
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+   .footer { width:100%; height:60px; position:absolute; bottom:0; background:#353f4d; }
+   
+   google-map{ width: 600px; height:600px;}

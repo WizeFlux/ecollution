@@ -8,7 +8,7 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
   angular.extend($scope, {
     center: {
       latitude: 0,
-      longitude: 0,
+      longitude: 0
     },
     stations: [],
     markers: [],
@@ -41,16 +41,19 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
   }
   
   $scope.$watch('selectedCity', function(newCity, oldCity) {
-    if (newCity){
-      $scope.markers = _.where($scope.stations, {city_id: newCity.id})
-      if ($scope.markers.length == 1) $scope.center = $scope.markers[0]
+    if (newCity) {
+      $scope.markers = _.where($scope.stations, {city_id: newCity.id});
+      $scope.selectedStation = null;
+      if ($scope.markers.length == 1) $scope.center = {
+        latitude: $scope.markers[0].latitude, longitude: $scope.markers[0].longitude
+      }
     }
   });
   
   $scope.$watch('selectedStation', function(newStation, oldStation) {
-    if (newStation){
-      $scope.markers = [newStation]; $scope.center = newStation
-    }
+    if (newStation) { $scope.markers = [newStation]; $scope.center = {
+      latitude: newStation.latitude, longitude: newStation.longitude 
+    }}
   });
   
 }]);
