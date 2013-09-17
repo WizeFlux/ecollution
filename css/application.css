@@ -1,15 +1,43 @@
-google-map{
-  height: 600px;
-  width: 600px;
-  display: block;
-}
+/* ==========================================================================
+   Main css
+   ========================================================================== */
+	html{ height:100%; min-width:980px; min-height:600px; }
+	body{ height:100%; background:#fff; }
+	.page-wrapper { min-height:100%; position:relative; }
+   
+   
+/* ==========================================================================
+   Header
+   ========================================================================== */
+   .header { width:100%; height:100px; position:absolute; top:0; background:#353f4d; }
+   .header-left { width:25%; float:left; }
+   .header-center { width:75%; float:right; }
+   /* logotype */
+   .logotype {  height:75px; padding:25px 0 0 15px; background:#fff; }
+   
+/* ==========================================================================
+   Content
+   ========================================================================== */
+   .content { width:100%; display:table; }
+   .content-inner { display:table-row; }
 
-a{
-  text-decoration: underline;
-  color: blue;
-  cursor: pointer;
-}
-
-a:hover{
-  text-decoration: none;
-}
+/* ==========================================================================
+   Main content
+   ========================================================================== */
+   .main-content { width:45%; margin:0 30% 0 25%; position:absolute; top:100px; bottom:60px; background:#fff; }
+   google-map { width:100%; height:100%; display: block; }
+					
+/* ==========================================================================
+   Sidebar left
+   ========================================================================== */
+   .sidebar-left { width:25%; position:absolute; top:100px; bottom:60x; left:0; background:#485566; }
+   
+/* ==========================================================================
+   Sidebar right
+   ========================================================================== */
+   .sidebar-right { width:30%; position:absolute; top:100px; bottom:60px; right:0; }
+	
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+   .footer { width:100%; height:60px; position:absolute; bottom:0; background:#353f4d; }
