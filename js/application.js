@@ -1,7 +1,7 @@
 var ecollution = angular.module('ecollution', ["google-maps"]);
 
 proxy = function(id) {
-  angular.element(document.getElementById("application")).scope().runme(id)  
+  angular.element(document.getElementById("application")).scope().selectStation(id)
 }
 
 ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
@@ -16,36 +16,41 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
   });
   
   $http.get('samples/getall.json').success(function(data){
-    $scope.stations = data
+    $scope.stations = _.map(data, function(station){
+      station.infoWindow = '<h5>' + station.name + '</h5><a onclick="proxy(\'' + station.id + '\')">\u0412\u044B\u0431\u0440\u0430\u0442\u044C</a>';
+      station.draggable = false;
+      return station;
+    });
+    
     $scope.cities = _.inject(data, function(memo, station){
       if (_.where(memo, {id: station.city_id}).length == 0) {
         memo.push({ id: station.city_id, name: station.city_name })
-      }
-      return memo
+      } return memo
     }, []);
   });
   
   
+  $scope.selectStation = function(id) {
+    $scope.$apply(function(){
+      $scope.selectedStation = _.where($scope.stations, {id: id})[0]  
+    })
+  }
+  
   $scope.cityStations = function(city) {
-    if (city)
-      return _.where($scope.stations, {city_id: city.id})
+    if (city) return _.where($scope.stations, {city_id: city.id})
   }
   
   $scope.$watch('selectedCity', function(newCity, oldCity) {
     if (newCity){
       $scope.markers = _.where($scope.stations, {city_id: newCity.id})
-      if ($scope.markers.length == 1)
-        $scope.center = $scope.markers[0]
+      if ($scope.markers.length == 1) $scope.center = $scope.markers[0]
     }
-      
   });
   
   $scope.$watch('selectedStation', function(newStation, oldStation) {
     if (newStation){
-      $scope.markers = [newStation]
-      $scope.center = newStation
+      $scope.markers = [newStation]; $scope.center = newStation
     }
-      
   });
   
 }]);
