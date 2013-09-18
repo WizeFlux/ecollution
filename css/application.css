@@ -27,7 +27,7 @@
    Main content
    ========================================================================== */
    .main-content { width:60%; float:left; }
-   google-map { width:100%; height:100%; display: block; }
+   
 					
 /* ==========================================================================
    Sidebar left
@@ -43,3 +43,5 @@
    Footer
    ========================================================================== */
    .footer { width:100%; height:60px; position:absolute; bottom:0; background:#353f4d; }
+
+   google-map { width:600px; height:600px; display: block; }
