@@ -5,6 +5,8 @@
     %meta{"charset" => "utf-8"}
     %script{"src" => "http://maps.googleapis.com/maps/api/js?sensor=false&language=ru"}
     %script{"src" => "js/angular.min.js"}
+    %script{"src" => "js/chart.js"}
+    %script{"src" => "js/angles.js"}
     %script{"src" => "js/angular-google-maps.js"}
     %script{"src" => "js/underscore-min.js"}
     %script{"src" => "js/application.js"}
@@ -23,40 +25,41 @@
               Система автоматического мониторинга состояния и загрязнения окружающей среды
               %span в on-line режиме
           .h-select
-            %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
-            %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
+            %select{"ng-init" => "selectedCity = cities[0]", "ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
+            %select{"ng-model" => "selectedStation", "ng-options" => "(s.id + ', ' + s.name) for s in cityStations(selectedCity)"}
 
       .content
         .sidebar-left
-          %nav.s-menu
-            %ul.s-menu-list
-              %li.s-menu-list__item
-                %a.s-menu-list__item-link{"href" => "#"} посты на карте
-                %a.s-menu-list__item-link{"href" => "#"} о проекте
-                %a.s-menu-list__item-link{"href" => "#"} описание веществ
+          %nav.s-menu.s-block
+            %ul.s-block-list
+              %li.s-block-list__item
+                %a.s-block-list__item-link{"href" => "#"} посты на карте
+              %li.s-block-list__item
+                %a.s-block-list__item-link{"href" => "#"} о проекте
+              %li.s-block-list__item
+                %a.s-block-list__item-link{"href" => "#"} описание веществ
             .s-block.s-post-type
               %ul.s-block-list
                 %li.s-block-list__item.s-post-type-red
                   Превышение ПДК
-                  %span.post-number 12
+                  %span.post-number {{typeStations('3').length}}
                 %li.s-block-list__item.s-post-type-blue
                   Водный пост
-                  %span.post-number 31
+                  %span.post-number {{typeStations('0').length}}
                 %li.s-block-list__item.s-post-type-green
                   Воздушный пост
-                  %span.post-number 5
+                  %span.post-number {{typeStations('1').length}}
                 %li.s-block-list__item.s-post-type-gray
                   Нет связи
-                  %span.post-number 34
+                  %span.post-number {{typeStations('2').length}}
           
         .main-content
           %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
         .sidebar-right
-
           .s-address
             .s-address-head
               %p
-                %span {{selectedStationData.pid}}
+                %span<> {{selectedStationData.pid}}
                 , {{selectedStationData.city_name}}, 
                 %br
                 {{selectedStationData.post_name}}
@@ -66,14 +69,16 @@
                 Вид поста
                 %span.view-post-type{"ng-switch-when" => "0"} Водный
                 %span.view-post-type{"ng-switch-when" => "1"} Воздушный
-                %span.view-post-type{"ng-switch-when" => "2"} Информация устарела
+                %span.view-post-type{"ng-switch-when" => "2"} Нет связи
                 %span.view-post-type{"ng-switch-when" => "3"} Превышение ПДК
               .s-button 
-                %ul.s-button-list
-                  %li.s-button-list__item.s-button-list__item-active Измерения
-                  %li.s-button-list__item График
-                  %li.s-button-list__item Информация
-              .s-adress-table-wrapper
+                %ul.s-button-list{"ng-init" => "tab = 'table'"}
+                  %li.s-button-list__item{"ng-click" => "tab = 'table'", "ng-class" => "classIf('s-button-list__item-active', (tab == 'table'))"} Измерения
+                  %li.s-button-list__item{"ng-click" => "tab = 'graph'", "ng-class" => "classIf('s-button-list__item-active', (tab == 'graph'))"} График
+                  %li.s-button-list__item{"ng-click" => "tab = 'text'", "ng-class" => "classIf('s-button-list__item-active', (tab == 'text'))"} Информация
+                  
+              -# Table with current values
+              .s-adress-table-wrapper.s-adress-block{"ng-show" => "tab == 'table'"}
                 %table.s-adress-table
                   %tr
                     %th Название
@@ -89,12 +94,32 @@
                     %td{"ng-switch" => "substance.state"}
                       %span.s-adress-table-red{"ng-switch-when" => "1"} Выше
                       %span.s-adress-table-green{"ng-switch-when" => "0"} В норме
-          
+                      
+              -# Informatioon Tab
+              .s-adress-block.s-adress-block-text{"ng-show" => "tab == 'text'"}
+                %p.s-adress-block-text-title Севастопольская 239А
+                %p.s-adress-block-text-coordinates (55°43"30', 24°21"55')
+                %p.s-adress-block-text-desc Как говорят разработчики, пользователям iPad не нужен браузер-инструмент, им нужен браузер, который позволяет просто пользоваться хорошим дисплеем и смотреть в своё удовольствие сайты. Идеей Coast было сделать так, чтобы отдельные страницы казались похожими на отдельные эппы, а присутствие самого браузера сводилось к минимуму.
+              
+              -# Chart Tab
+              .s-adress-block.s-adress-block-graph{"ng-show" => "tab == 'graph'"}
+                .b-graph-select
+                  %p.b-graph-select__row
+                    %select{"ng-init" => "selectedSubstance = substanceDefinitions[0]", "ng-model" => "selectedSubstance", "ng-options" => "s.name for s in substanceDefinitions"}
+                    %select{"ng-init" => "chartPeriodFrom = timestamps[0]", "ng-model" => "chartPeriodFrom", "ng-options" => "t.name for t in timestamps"}
+                    = "-"
+                    %select{"ng-init" => "chartPeriodTo = timestamps[7]", "ng-model" => "chartPeriodTo", "ng-options" => "t.name for t in timestamps"}
+
+                  %br
+                  .b-graph
+                    %canvas{ "chart" => true, "type" => "Line", "options" => "chartOptions", "data" => "chart", "width" => "278", "height" => "280"}
+                
       %footer.footer
-        .copyright
-          %p © 2012 Экрос Инжиниринг. ingecros.ru
-          %p Все права защищены
-        .web-development
-          %p
-            Cделано в
-            %a{"href" => "#"} redfor.ru
+        .footer-inner
+          .copyright
+            %p © 2012 Экрос Инжиниринг. ingecros.ru
+            %p Все права защищены
+          .web-development
+            %p
+              Cделано в
+              %a{"href" => "#"} redfor.ru
