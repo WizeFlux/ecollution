@@ -22,8 +22,9 @@
             %p
               Система автоматического мониторинга состояния и загрязнения окружающей среды
               %span в on-line режиме
-          %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
-          %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
+          .h-select
+            %select{"ng-model" => "selectedCity", "ng-options" => "c.name for c in cities"}
+            %select{"ng-model" => "selectedStation", "ng-options" => "s.name for s in cityStations(selectedCity)"}
 
       .content
         .sidebar-left
@@ -33,6 +34,21 @@
                 %a.s-menu-list__item-link{"href" => "#"} посты на карте
                 %a.s-menu-list__item-link{"href" => "#"} о проекте
                 %a.s-menu-list__item-link{"href" => "#"} описание веществ
+            .s-block.s-post-type
+              %ul.s-block-list
+                %li.s-block-list__item.s-post-type-red
+                  Превышение ПДК
+                  %span.post-number 12
+                %li.block-list__item.s-post-type-blue
+                  Водный пост
+                  %span.post-number 31
+                %li.s-block-list__item.s-post-type-green
+                  Воздушный пост
+                  %span.post-number 5
+                %li.s-block-list__item.s-post-type-gray
+                  Нет связи
+                  %span.post-number 34
+          
         .main-content
           %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
 

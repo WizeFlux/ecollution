@@ -1,0 +1,81 @@
+{
+    "add_info": "", 
+    "id": "12", 
+    "pid": "4", 
+    "signaling": "", 
+    "substances": {
+        "ba2": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "ca2": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "cl": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "eh": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "epv": {
+            "pdk": null, 
+            "value": "165.4"
+        }, 
+        "epv-hor": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "f": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "k": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "mutnost": {
+            "pdk": null, 
+            "value": "97.204"
+        }, 
+        "n(nh4)": {
+            "pdk": null, 
+            "value": "0.0158"
+        }, 
+        "n(no3)": {
+            "pdk": null, 
+            "value": "0.1716"
+        }, 
+        "o2rastv": {
+            "pdk": "5.12", 
+            "value": "10.659"
+        }, 
+        "ph": {
+            "pdk": null, 
+            "value": "8.4891"
+        }, 
+        "ph-hor": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "photometr": {
+            "pdk": null, 
+            "value": null
+        }, 
+        "sac254": {
+            "pdk": null, 
+            "value": "9.299"
+        }, 
+        "sumpau": {
+            "pdk": null, 
+            "value": "0.0026"
+        }, 
+        "t": {
+            "pdk": null, 
+            "value": "14.549"
+        }
+    }, 
+    "time": "1371068400"
+}
