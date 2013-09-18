@@ -1,67 +1,191 @@
 <!DOCTYPE html>
-<html ng-app='ecollution'>
-  <head>
-    <title>Ecollution live</title>
-    <meta charset='utf-8'>
-    <script src='http://maps.googleapis.com/maps/api/js?sensor=false&amp;language=ru'></script>
-    <script src='js/angular.min.js'></script>
-    <script src='js/angular-google-maps.js'></script>
-    <script src='js/underscore-min.js'></script>
-    <script src='js/application.js'></script>
-    <link href='css/reset.css' rel='stylesheet' type='text/css'>
-    <link href='css/application.css' rel='stylesheet' type='text/css'>
-  </head>
-  <body id='application' ng-controller='AppCtrl'>
-    <div class='page-wrapper'>
-      <header class='header'>
-        <div class='header-left'>
-          <div class='logotype'>
-            <a href='#'>
-              <img alt='logotype' src='img/logotype.gif'>
-            </a>
-          </div>
-        </div>
-        <div class='header-center'>
-          <div class='h-desc'>
-            <p>
-              Система автоматического мониторинга состояния и загрязнения окружающей среды
-              <span>в on-line режиме</span>
-            </p>
-          </div>
-          <select ng-model='selectedCity' ng-options='c.name for c in cities'></select>
-          <select ng-model='selectedStation' ng-options='s.name for s in cityStations(selectedCity)'></select>
-        </div>
-      </header>
-      <div class='content'>
-        <div class='sidebar-left'>
-          <nav class='s-menu'>
-            <ul class='s-menu-list'>
-              <li class='s-menu-list__item'>
-                <a class='s-menu-list__item-link' href='#'>посты на карте</a>
-                <a class='s-menu-list__item-link' href='#'>о проекте</a>
-                <a class='s-menu-list__item-link' href='#'>описание веществ</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class='main-content'>
-          <google-map center='center' draggable='true' fit='true' markers='markers' zoom='zoom'></google-map>
-        </div>
-        <div class='sidebar-right'>sidebar right</div>
+  <html ng-app='ecollution'>
+    <head>
+		
+      <title>Ecollution live</title>
+      <meta charset='utf-8'>
+	  
+      <script src='http://maps.googleapis.com/maps/api/js?sensor=false&amp;language=ru'></script>
+      <script src='js/angular.min.js'></script>
+      <script src='js/angular-google-maps.js'></script>
+      <script src='js/underscore-min.js'></script>
+      <script src='js/application.js'></script>
+      <link href='css/reset.css' rel='stylesheet' type='text/css'>
+      <link href='css/application.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body id='application' ng-controller='AppCtrl'>
+  <div class='page-wrapper'>
+  <!-- <div class='page-wrapper no-sidebar-right'> -->
+    <header class='header'>
+      <div class='header-left'>
+        <div class='logotype'><a href='#'><img alt='logotype' src='img/logotype.gif'></a></div>
       </div>
-      <footer class='footer'>
+		
+      <div class='header-center'>
+        <div class='h-desc'>
+          <p> Система автоматического мониторинга состояния и загрязнения окружающей среды <span>в on-line режиме</span></p>
+        </div>
+		  
+        <div class="h-select">
+          <select ng-model='selectedCity' ng-options='c.name for c in cities'></select>
+
+          <select ng-model='selectedStation' ng-options='s.name for s in cityStations(selectedCity)'></select>
+		</div>
+      </div>
+    </header>
+	
+    <div class='content'>	  
+      <div class='main-content'>
+        <google-map center='center' draggable='true' fit='true' markers='markers' zoom='zoom'></google-map>
+      </div>
+	  
+      <div class='sidebar-left'>
+        <nav class='s-block s-menu'>
+          <ul class='s-block-list'>
+            <li class='s-block-list__item'><a class='s-block-list__item-link' href='#'>посты на карте</a></li>
+			<li class='s-block-list__item'><a class='s-block-list__item-link' href='#'>о проекте</a></li>
+            <li class='s-block-list__item'><a class='s-block-list__item-link' href='#'>описание веществ</a></li>            
+          </ul>
+        </nav>
+		
+        <div class='s-block s-post-type'>
+          <ul class='s-block-list'>
+            <li class='s-block-list__item s-post-type-red'>Превышение ПДК <span class="post-number">12</span></li>
+			<li class='s-block-list__item s-post-type-blue'>Водный пост <span class="post-number">31</span></li>
+			<li class='s-block-list__item s-post-type-green'>Воздушный пост <span class="post-number">5</span></li>
+            <li class='s-block-list__item s-post-type-gray'>Нет связи <span class="post-number">34</span></li>
+          </ul>
+        </div>		
+      </div>	  
+	  
+      <div class='sidebar-right'>
+	    <div class="s-address">
+		  <div class="s-address-head">
+		    <p><span>13</span>, г. Иркутск, <br>ул. Севастопольская 239А</p>
+			
+		    <div class="s-address-close"></div>
+		  </div>
+		  
+		  <div class="s-address-body">
+		    <p class="view-post">Вид поста <span class="view-post-type">Воздушный</span></p>
+			
+			<div class="s-button">
+		      <ul class="s-button-list">
+			    <li class="s-button-list__item s-button-list__item-active">Измерения</li>
+			    <li class="s-button-list__item">График</li>
+			    <li class="s-button-list__item">Информация</li>
+		      </ul>
+			</div>
+			
+			<div class="s-adress-table-wrapper">
+				<table class="s-adress-table">
+				  <tr>
+					<th>Название</th>
+					<th>Значение</th>
+					<th>Ед.изм.</th>
+					<th>ПДК</th>
+					<th>Состояние</th>
+				  </tr>
+				  
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-red">Выше</span></td>
+				  </tr>
+				  
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+				  
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-gray">Граница</span></td>
+				  </tr>
+				  
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>
+
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>	  
+				  
+				  <tr>
+					<td>NO 2</td>
+					<td>8 val.</td>
+					<td>mg/m2</td>
+					<td>0.28</td>
+					<td><span class="s-adress-table-green">В норме</span></td>
+				  </tr>				  
+				</table>
+			</div>
+		  </div>
+		</div>
+	  </div>
+    </div>
+	
+    <footer class='footer'>
+	  <div class="footer-inner">
         <div class='copyright'>
-          <p>© 2012 Экрос Инжиниринг. ingecros.ru</p>
+          <p>© 2012 Экрос Инжиниринг. <a href="#">ingecros.ru</a></p>
           <p>Все права защищены</p>
         </div>
+	  
         <div class='web-development'>
-          <p>
-            Cделано в
-            <a href='#'>redfor.ru</a>
-          </p>
+          <p>Cделано в <a href='#'>redfor.ru</a></p>
         </div>
-      </footer>
-    </div>
-  </body>
+	  </div>
+    </footer>
+  </div>
+</body>
 </html>
-
