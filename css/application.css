@@ -1,102 +1,85 @@
-<<<<<<< HEAD
 /* ==========================================================================
-   Main css
-   ========================================================================== */
-	html{ height:100%; min-width:980px; }
-	body{ height:100%; background:#fff; }
-	.page-wrapper { min-height:100%; position:relative; }
-   
-   
-/* ==========================================================================
-   Header
-   ========================================================================== */
-   .header { width:100%; height:100px; background:#353f4d; }
-   .header-left { width:20%; float:left; }
-   .header-center { width:80%; float:right; }
-   /* logotype */
-   .logotype {  height:75px; padding-top:25px; background:#fff; }
-   .logotype img { margin-left:20px; }
-   
-   
-   
-/* ==========================================================================
-   Content
-   ========================================================================== */
-   .content { width:100%; }
 
-/* ==========================================================================
-   Main content
-   ========================================================================== */
-   .main-content { width:60%; float:left; }
-   
-					
-/* ==========================================================================
-   Sidebar left
-   ========================================================================== */
-   .sidebar-left { width:20%; float:left; background:#485566; }
-   
-/* ==========================================================================
-   Sidebar right
-   ========================================================================== */
-   .sidebar-right { width:20%; float:left; }   
-	
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-   .footer { width:100%; height:60px; position:absolute; bottom:0; background:#353f4d; }
-
-   google-map { width:600px; height:600px; display: block; }
-=======
-/* ==========================================================================
    Main css
+
    ========================================================================== */
+
 	html{ height:100%; min-width:1000px; min-height:600px; }
+
 	body{ height:100%; background:#fff; }
+
 	.page-wrapper { min-height:100%; position:relative; }
 	/* no sidebar */
+
    .no-sidebar-right .header-center { right:0; }
    .no-sidebar-right .main-content { right:0; }
    .no-sidebar-right .sidebar-right { display:none; }   
+
    
+
 /* ==========================================================================
+
    Header
+
    ========================================================================== */
+
    .header { width:100%; height:100px; position:relative; background:#353f4d; }
+
    .header-left { width:240px; }
+
    .header-center { position:absolute; top:0; left:240px; right: 300px; }
+
    /* logotype */
+
    .logotype {  height:75px; padding-top:25px; background:#fff; }
+
    .logotype img { margin-left:20px; }
    
    .h-desc { width:325px; margin-left:18px; padding-top:15px; font:bold 13px/22px Tahoma; color:#7cc2ff; text-shadow:1px 1px 0 #252e39; }
    .h-desc span { display:block; font-weight:normal; color:#939ca8; }
    
    .h-select { width:110px; position:absolute; top:13px; right:18px; }
-   @media (min-width: 1150px) {
+   @media (min-width: 1200px) {
    .h-select { width:240px; top:28px; }
    }
    
    .h-select select { width:110px; padding:7px 0 7px 10px; font:normal 14px Helvetica; color:#fff; background:#556171 url('../img/select.jpg') 100% 50% no-repeat; border:#262d37 1px solid; border-radius:4px; outline:none; text-shadow:1px 1px 0 #363f4d; -webkit-appearance: none; }
+
    
+
 /* ==========================================================================
+
    Content
+
    ========================================================================== */
+
    .content {  }
    
    .main-content, 
    .sidebar-left, 
    .sidebar-right { position:absolute; top:100px; bottom:60px; }
 
+
+
 /* ==========================================================================
+
    Main content
+
    ========================================================================== */
+
    .main-content { width:auto; left:240px; right:300px;  }
    /* google map */
+
    google-map { width:100%; height:100%; display: block; }
+
 					
+
 /* ==========================================================================
+
    Sidebar left
+
    ========================================================================== */
+
    .sidebar-left { width:240px; background:#485566; }
    .s-block-list { border-top:#3f4a59 1px solid; border-bottom:#556171 1px solid; }
    .s-block-list__item { height:38px; font:normal 12px/38px Helvetica; text-transform:uppercase; border-top:#556171 1px solid; border-bottom:#3f4a59 1px solid; }
@@ -109,10 +92,15 @@
    .s-post-type .s-post-type-green { background-position:18px -72px; }
    .s-post-type .s-post-type-gray { background-position:18px -112px; }
    .post-number { height:20px; padding:0 9px; display:block; position:absolute; top:10px; left:190px; line-height:20px;  background:#3e4959; border-top:#303945 1px solid; border-radius:25px; }
+
    
+
 /* ==========================================================================
+
    Sidebar right
+
    ========================================================================== */
+
    .sidebar-right { width:299px; top:0; right:0; background:#fff; border-left:#ccc 1px solid; }
    .s-address {  }
    .s-address-head { height:71px; padding:28px 15px 0; margin-bottom:15px; position:relative; font:normal 16px/22px Tahoma; border-bottom:#ccc 1px solid; }
@@ -142,10 +130,15 @@
    .s-adress-table th,
    .s-adress-table td { border:#ccc 1px solid; border-right:none; }
    
+
 	
+
 /* ==========================================================================
+
    Footer
+
    ========================================================================== */
+
    .footer { width:100%; height:60px; position:absolute; bottom:0; background:#353f4d; }
    .footer-inner { height:60px; position:relative; font:normal 12px Helvetica; color:#fff; }
    .copyright { position:absolute; top:18px; left:18px; }
@@ -154,4 +147,3 @@
    .web-development { position:absolute; top:18px; right:18px; font-weight:bold; }
    .web-development a { text-decoration:none; color:#ff7c7c; }
    .web-development a:hover { text-decoration:underline; }
->>>>>>> 001619efdff92318777f8c9ffda9ad734f08f4f0

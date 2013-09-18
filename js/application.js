@@ -14,7 +14,9 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     markers: [],
     zoom: 8,
   });
-  
+
+  $scope.classUnless = function(k,c){ return c ? '' : k };
+
   $http.get('samples/getall.json').success(function(data){
     $scope.stations = _.map(data, function(station){
       station.infoWindow = '<h5>' + station.name + '</h5><a onclick="proxy(\'' + station.id + '\')">\u0412\u044B\u0431\u0440\u0430\u0442\u044C</a>';
@@ -51,9 +53,16 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
   });
   
   $scope.$watch('selectedStation', function(newStation, oldStation) {
-    if (newStation) { $scope.markers = [newStation]; $scope.center = {
-      latitude: newStation.latitude, longitude: newStation.longitude 
-    }}
+    if (newStation) {
+      $scope.markers = [newStation];
+      $scope.center = { latitude: newStation.latitude, longitude: newStation.longitude };
+      
+      $http.get('samples/current/' + newStation.id + '.json').success(function(data){
+        debugger
+        $scope.selectedStationData = data;
+      });
+      
+    }
   });
   
 }]);

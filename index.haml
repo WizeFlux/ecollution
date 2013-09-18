@@ -11,7 +11,7 @@
     %link{"rel" => "stylesheet", "type" => "text/css", "href" => "css/reset.css"}
     %link{"rel" => "stylesheet", "type" => "text/css", "href" => "css/application.css"}
   %body{"ng-controller" => "AppCtrl", "id" => "application"}
-    .page-wrapper
+    .page-wrapper{"ng-class" => "classUnless('no-sidebar-right', selectedStation)"}
       %header.header
         .header-left
           .logotype
@@ -39,7 +39,7 @@
                 %li.s-block-list__item.s-post-type-red
                   Превышение ПДК
                   %span.post-number 12
-                %li.block-list__item.s-post-type-blue
+                %li.s-block-list__item.s-post-type-blue
                   Водный пост
                   %span.post-number 31
                 %li.s-block-list__item.s-post-type-green
@@ -51,9 +51,45 @@
           
         .main-content
           %google-map{"center" => "center", "draggable" => "true", "zoom" => "zoom", "markers" => "markers", "fit" => "true"}
+        .sidebar-right
 
-        .sidebar-right sidebar right
-
+          .s-address
+            .s-address-head
+              %p
+                %span {{selectedStationData.pid}}
+                , {{selectedStationData.city_name}}, 
+                %br
+                {{selectedStationData.post_name}}
+              .s-address-close{"ng-click" => "selectedStation = null"}
+            .s-address-body
+              %p.view-post{"ng-switch" => "selectedStationData.post_type"}
+                Вид поста
+                %span.view-post-type{"ng-switch-when" => "0"} Водный
+                %span.view-post-type{"ng-switch-when" => "1"} Воздушный
+                %span.view-post-type{"ng-switch-when" => "2"} Информация устарела
+                %span.view-post-type{"ng-switch-when" => "3"} Превышение ПДК
+              .s-button
+                %ul.s-button-list
+                  %li.s-button-list__item.s-button-list__item-active Измерения
+                  %li.s-button-list__item График
+                  %li.s-button-list__item Информация
+              .s-adress-table-wrapper
+                %table.s-adress-table
+                  %tr
+                    %th Название
+                    %th Значение
+                    %th Ед.изм.
+                    %th ПДК
+                    %th Состояние
+                  %tr{"ng-repeat" => "substance in selectedStationData.substances"}
+                    %td {{substance.human_name}}
+                    %td {{substance.value}}
+                    %td {{substance.units}}
+                    %td {{substance.pdk}}
+                    %td{"ng-switch" => "substance.state"}
+                      %span.s-adress-table-red{"ng-switch-when" => "1"} Выше
+                      %span.s-adress-table-green{"ng-switch-when" => "0"} В норме
+          
       %footer.footer
         .copyright
           %p © 2012 Экрос Инжиниринг. ingecros.ru
