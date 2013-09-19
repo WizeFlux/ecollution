@@ -1,5 +1,6 @@
 var ecollution = angular.module('ecollution', ["google-maps", "angles"]);
 
+// Proxy function required to call Angular method from link's onclick attribute (infowindow)
 proxy = function(id) {
   angular.element(document.getElementById("application")).scope().selectStation(id)
 }
@@ -8,30 +9,24 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 
 
   // ***********************************
-  // There are initial state decloration
+  // Initial state declaration
   // ***********************************
-  
+
   $scope.chartOptions = {
-    scaleFontSize : 10
+    scaleFontSize : 10,
+    pointDot : false,
+    datasetStrokeWidth : 1,
+    scaleLineColor : "rgba(155,155,155,1)",
+    scaleLineWidth : 1,
+    scaleFontColor : "#000",
+    datasetFill : false,
   };
   
   $scope.chart = {
       labels : [],
       datasets : [
-          {
-              fillColor : "rgba(151,187,205,0)",
-              strokeColor : "#e67e22",
-              pointColor : "rgba(151,187,205,0)",
-              pointStrokeColor : "#e67e22",
-              data : []
-          },
-          {
-              fillColor : "rgba(151,187,205,0)",
-              strokeColor : "#f1c40f",
-              pointColor : "rgba(151,187,205,0)",
-              pointStrokeColor : "#f1c40f",
-              data : []
-          }
+          { strokeColor : "#ff0000", data : [] },
+          { strokeColor : "#0000ff", data : [] }
       ], 
   };
   
@@ -64,18 +59,23 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     })
   };
 
+  // Get all of stations, acrooss application
   $http.get('samples/getall.json').success(function(data){
+    
+    // Extend each station with infoWindow partial
     $scope.stations = _.map(data, function(station){
-      station.infoWindow = '<h5>' + station.name + '</h5><br><a onclick="proxy(\'' + station.id + '\')">\u0412\u044B\u0431\u0440\u0430\u0442\u044C</a>';
+      station.infoWindow = '<h5>' + station.name + '</h5><br><a onclick="proxy(\'' + station.id + '\')">Подробно</a>';
       return station;
     });
     
+    // Extract cities from stations array
     $scope.cities = _.inject(data, function(memo, station){
       if (_.where(memo, {id: station.city_id}).length == 0) {
         memo.push({ id: station.city_id, name: station.city_name })
       } return memo
     }, []);
     
+    // Initial state
     $scope.cities.unshift({id: 'all', name: 'Все города'});
     $scope.selectedCity = $scope.cities[0];
   });
@@ -89,14 +89,17 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
 
   $scope.classIf = function(k,c){ return c ? k : '' };
   
+  // Select station by id (required for proxy call from map infoWindow)
   $scope.selectStation = function(id) { $scope.$apply(function(){
     $scope.selectedStation = _.where($scope.stations, {id: id})[0];
   })};
   
+  // Select station by type
   $scope.typeStations = function(type) {
     return _.where($scope.stations, {type: type})
   }
-  
+
+  // Select station by city
   $scope.cityStations = function(city) {
     if (city) {
       if (city.id == "all") return $scope.stations
@@ -104,6 +107,7 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     }
   }
 
+  // Call for chart data
   $scope.drawChart = function() {
     var subId = $scope.selectedSubstance.id, tsFrom = $scope.chartPeriodFrom.id, tsTo = $scope.chartPeriodTo.id, stationId = $scope.selectedStation.id
     var url = 'samples/' + subId + '-pidf' + stationId + '-time_from' + tsFrom + '-time_to' + tsTo + '-freqh.json'
@@ -112,6 +116,10 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
       $scope.chart.labels = _.map(data, function(reading){ return reading.label });
       $scope.chart.datasets[0].data = _.map(data, function(reading){ return parseFloat(reading.pdk) });
       $scope.chart.datasets[1].data = _.map(data, function(reading){ return parseFloat(reading.value) });
+    }).error(function(data){
+      $scope.chart.labels = [];
+      $scope.chart.datasets[0].data = [];
+      $scope.chart.datasets[1].data = [];
     });    
   };
 
@@ -131,21 +139,26 @@ ecollution.controller('AppCtrl', ['$scope', '$http', function($scope, $http) {
     }
   });
   
+  
+  // Center map if only one marker on it (map with many centered automatically)
   $scope.$watch('markers', function(newMarkers, oldMarkers) {
     if (newMarkers.length == 1) {
       $scope.center = {latitude: newMarkers[0].latitude, longitude: newMarkers[0].longitude};
     }
   });
-
+  
   
   $scope.$watch('selectedStation', function(newStation, oldStation) {
     if (newStation) {
       $scope.markers = [newStation];
+      
+      // reset right sidebar state
       $scope.tab = 'table';
       $scope.chart.labels = [];
       $scope.chart.datasets[0].data = [];
       $scope.chart.datasets[1].data = [];
       $scope.drawChart();
+      
       $http.get('samples/current/' + newStation.id + '.json').success(function(data){
         $scope.selectedStationData = data;
       });
